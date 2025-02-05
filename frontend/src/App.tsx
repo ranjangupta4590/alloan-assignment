@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import StockSelector from './components/StockSelector';
+import DurationSelector from './components/DurationSelector';
+import StockChart from './components/StockChart';
+import { useAppSelector } from './redux/hooks';
 
-function App() {
+const App: React.FC = () => {
+  const selectedStock = useAppSelector((state) => state.stock.selectedStock);
+  const selectedDuration = useAppSelector((state) => state.stock.selectedDuration);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="min-h-screen bg-gray-100 p-4">
+      <div className="max-w-4xl mx-auto bg-white shadow-md rounded p-6">
+        <h1 className="text-2xl font-bold mb-4 text-center">Stock Graph Viewer</h1>
+        <div className="flex flex-col gap-4">
+          <StockSelector />
+          {selectedStock && <DurationSelector />}
+          {selectedStock && selectedDuration && <StockChart />}
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
